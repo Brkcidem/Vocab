@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/singFragment">
+
+    <fragment
+        android:id="@+id/singFragment"
+        android:name="com.burakhancidem.vocab.view.SingFragment"
+        android:label="fragment_sing"
+        tools:layout="@layout/fragment_sing" >
+        <action
+            android:id="@+id/action_singFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.burakhancidem.vocab.view.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_singFragment"
+            app:destination="@id/singFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_levelFragment"
+            app:destination="@id/levelFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.burakhancidem.vocab.view.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" >
+        <action
+            android:id="@+id/action_editFragment_to_saveFragment"
+            app:destination="@id/saveFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_deleteFragment"
+            app:destination="@id/deleteFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/saveFragment"
+        android:name="com.burakhancidem.vocab.view.SaveFragment"
+        android:label="fragment_save"
+        tools:layout="@layout/fragment_save" >
+        <action
+            android:id="@+id/action_saveFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/levelFragment"
+        android:name="com.burakhancidem.vocab.view.LevelFragment"
+        android:label="fragment_level"
+        tools:layout="@layout/fragment_level" >
+        <action
+            android:id="@+id/action_levelFragment_to_modeFragment"
+            app:destination="@id/modeFragment" />
+        <action
+            android:id="@+id/action_levelFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modeFragment"
+        android:name="com.burakhancidem.vocab.view.ModeFragment"
+        android:label="ModeFragment" >
+        <action
+            android:id="@+id/action_modeFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+        <argument
+            android:name="selectedLevel"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.burakhancidem.vocab.view.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" >
+        <action
+            android:id="@+id/action_gameFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_gameFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
+        <argument
+            android:name="selectedMode"
+            app:argType="string" />
+        <argument
+            android:name="selectedLevels"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.burakhancidem.vocab.view.ScoreFragment"
+        android:label="fragment_score"
+        tools:layout="@layout/fragment_score" >
+        <action
+            android:id="@+id/action_scoreFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+        <action
+            android:id="@+id/action_scoreFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <argument
+            android:name="reachedScore"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_scoreFragment_to_levelFragment"
+            app:destination="@id/levelFragment" />
+        <argument
+            android:name="reachedBestScore"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/deleteFragment"
+        android:name="com.burakhancidem.vocab.view.DeleteFragment"
+        android:label="fragment_delete"
+        tools:layout="@layout/fragment_delete" >
+        <argument
+            android:name="selectedEnWord"
+            app:argType="string" />
+        <argument
+            android:name="selectedTrWord"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_deleteFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
+</navigation>
