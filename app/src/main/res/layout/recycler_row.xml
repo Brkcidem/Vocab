@@ -22,4 +22,10 @@
         android:textColor="#E91E63"
         android:textSize="20sp"></TextView>
 
+    <TextView
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""></TextView>
+
 </LinearLayout>

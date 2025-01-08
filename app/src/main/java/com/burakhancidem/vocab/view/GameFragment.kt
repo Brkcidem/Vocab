@@ -278,6 +278,8 @@ class GameFragment : Fragment() {
                                     getHeart()
                                 }else{}
                                 if (heart == 0){
+                                    Toast.makeText(requireActivity(), editTextTrWord, Toast.LENGTH_LONG)
+                                        .show()
                                         val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
                                         Navigation.findNavController(it).navigate(action)
                                 }else{
@@ -298,12 +300,15 @@ class GameFragment : Fragment() {
                             heart --
                         }else{ }
                         if (heart == 0){
+                            Toast.makeText(requireActivity(), editTextTrWord, Toast.LENGTH_LONG)
+                                .show()
                             val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
                             Navigation.findNavController(it).navigate(action)
                         }else{
-                            Toast.makeText(requireActivity(), "New Word!", Toast.LENGTH_SHORT)
+                            Toast.makeText(requireActivity(), editTextTrWord, Toast.LENGTH_LONG)
                                 .show()
                             getData()
+                            editTextWord?.text = ""
                         }
                     }
                 }
@@ -349,6 +354,8 @@ class GameFragment : Fragment() {
                                     getHeart()
                                 }else{ }
                                 if (heart == 0){
+                                    Toast.makeText(requireActivity(), editTextEnWord, Toast.LENGTH_LONG)
+                                        .show()
                                     val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
                                     Navigation.findNavController(it).navigate(action)
                                 }else{
@@ -369,12 +376,15 @@ class GameFragment : Fragment() {
                             heart --
                         }else{ }
                         if (heart == 0){
+                            Toast.makeText(requireActivity(), editTextEnWord, Toast.LENGTH_LONG)
+                                .show()
                             val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
                             Navigation.findNavController(it).navigate(action)
                         }else{
-                            Toast.makeText(requireActivity(), "New Word!", Toast.LENGTH_SHORT)
+                            Toast.makeText(requireActivity(), editTextEnWord, Toast.LENGTH_LONG)
                                 .show()
                             getData()
+                            editTextWord?.text = ""
                         }
                     }
 
