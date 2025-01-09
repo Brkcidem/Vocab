@@ -7,17 +7,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.burakhancidem.vocab.R
 import com.burakhancidem.vocab.adapter.EditRecyclerAdapter
 import com.burakhancidem.vocab.databinding.FragmentEditBinding
@@ -29,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import androidx.activity.OnBackPressedCallback
+
 class EditFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
@@ -65,7 +59,6 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEditBinding.inflate(layoutInflater,container,false)
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         editAdapter = EditRecyclerAdapter(wordArrayList)
         binding.recyclerView.adapter = editAdapter

@@ -9,24 +9,17 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.burakhancidem.vocab.R
-import com.burakhancidem.vocab.adapter.EditRecyclerAdapter
-import com.burakhancidem.vocab.model.Word
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-import org.checkerframework.common.subtyping.qual.Bottom
 import kotlin.random.Random
 
 class GameFragment : Fragment() {
@@ -38,7 +31,6 @@ class GameFragment : Fragment() {
     private var score : Int = 0
     private var bestScoreTextView: Int = 0
     private var heart : Int = 1
-    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -46,10 +38,8 @@ class GameFragment : Fragment() {
 
         auth = Firebase.auth
         firestore = Firebase.firestore
-        db = Firebase.firestore
         getLevels()
         getData()
-
     }
 
     override fun onCreateView(
@@ -74,19 +64,6 @@ class GameFragment : Fragment() {
         }
     }
     ///////////////////
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-        val finishButton = view.findViewById<Button>(R.id.finishButton)
-        finishButton?.setOnClickListener{
-            val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
-            Navigation.findNavController(it).navigate(action)
-        }
-
-
-    }
 
     private fun checkAndUpdateBestScore() {
 
@@ -127,7 +104,6 @@ class GameFragment : Fragment() {
             }
         }
 
-
         if (userEmail != null && myLevels == "medium") {
             // Kullanıcının en yüksek skorunu al
             val userDocRef = firestore.collection("Users").document(userEmail)
@@ -146,7 +122,6 @@ class GameFragment : Fragment() {
                         bestScoreTextView = currentBestScore.toInt()
                     }
 
-
                 } else {
                     // Eğer kullanıcı belgesi yoksa, yeni bir belge oluştur ve en yüksek skoru kaydet
                     val userData = hashMapOf(
@@ -163,7 +138,6 @@ class GameFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to retrieve best score: ${exception.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
-
 
         if (userEmail != null && myLevels == "hard") {
             // Kullanıcının en yüksek skorunu al
@@ -242,7 +216,7 @@ class GameFragment : Fragment() {
 
     fun getData() {
         fun enMode(){
-            db.collection("Words").whereEqualTo("editTextEmailAddress",auth.currentUser!!.email!!).get().addOnSuccessListener { result ->
+            firestore.collection("Words").whereEqualTo("editTextEmailAddress",auth.currentUser!!.email!!).get().addOnSuccessListener { result ->
                 if (!result.isEmpty) {
                     val documents = result.documents
                     val randomDocument = documents.random()
@@ -311,6 +285,15 @@ class GameFragment : Fragment() {
                             editTextWord?.text = ""
                         }
                     }
+
+                    val finishButton = view?.findViewById<Button>(R.id.finishButton)
+                    finishButton?.setOnClickListener{
+                        Toast.makeText(requireActivity(), editTextTrWord, Toast.LENGTH_LONG)
+                            .show()
+                        val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
+                        Navigation.findNavController(it).navigate(action)
+                    }
+
                 }
             }.addOnFailureListener { exception ->
                 println("Error getting documents: ${exception.localizedMessage}")
@@ -318,7 +301,7 @@ class GameFragment : Fragment() {
         }
 
         fun trMode(){
-            db.collection("Words").whereEqualTo("editTextEmailAddress",auth.currentUser!!.email!!).get().addOnSuccessListener { result ->
+            firestore.collection("Words").whereEqualTo("editTextEmailAddress",auth.currentUser!!.email!!).get().addOnSuccessListener { result ->
                 if (!result.isEmpty) {
 
                     val documents = result.documents
@@ -386,6 +369,14 @@ class GameFragment : Fragment() {
                             getData()
                             editTextWord?.text = ""
                         }
+                    }
+
+                    val finishButton = view?.findViewById<Button>(R.id.finishButton)
+                    finishButton?.setOnClickListener{
+                        Toast.makeText(requireActivity(), editTextEnWord, Toast.LENGTH_LONG)
+                            .show()
+                        val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
+                        Navigation.findNavController(it).navigate(action)
                     }
 
                 }

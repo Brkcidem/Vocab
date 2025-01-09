@@ -11,24 +11,14 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import com.burakhancidem.vocab.R
 import androidx.activity.OnBackPressedCallback
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 
 class ScoreFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
     private var myScore = 0
     private var myBestScore = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        auth = Firebase.auth
-        firestore = Firebase.firestore
 
         fun Fragment.handleBackPressWithWarning(onBackPressedAction: () -> Unit) {
             requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {

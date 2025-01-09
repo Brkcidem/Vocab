@@ -1,6 +1,5 @@
 package com.burakhancidem.vocab.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,11 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.clearFragmentResult
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.burakhancidem.vocab.R
 import com.burakhancidem.vocab.databinding.FragmentMainBinding
@@ -22,21 +18,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 
 class MainFragment : Fragment() {
 
     lateinit var binding: FragmentMainBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
-        firestore = Firebase.firestore
 
         fun Fragment.handleBackPressWithWarning(onBackPressedAction: () -> Unit) {
             requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -74,7 +66,6 @@ class MainFragment : Fragment() {
         }else
             super.onOptionsItemSelected(item)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

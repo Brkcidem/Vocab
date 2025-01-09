@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:onClick="playButtonClicked"
             android:text="PLAY"
+            android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
