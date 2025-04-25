@@ -1,35 +1,21 @@
-# 📘 Vocab – Vocabulary Learning Android App
+# 📚 Vocab
 
-**Vocab** is a modern Android application designed to help users improve their English vocabulary.  
-Built with Kotlin and MVVM architecture, it features Firebase integration and a clean, intuitive UI.
+Vocab, kelime ezberlemeyi kolaylaştırmak için geliştirilmiş basit ve kullanıcı dostu bir Android uygulamasıdır. Kullanıcılar yeni kelimeler ekleyebilir, bu kelimeleri listeleyebilir ve detaylarını görüntüleyebilir.
 
----
+## ✨ Özellikler
 
-## ✨ Features
+- ✅ Yeni kelime ekleme
+- 📋 Kelime listesi görüntüleme (RecyclerView)
+- 🔍 Detay sayfasında kelime bilgileri
+- 📦 Activity'ler arası veri aktarımı (Intent ile)
+- 🧩 ViewBinding kullanımı
 
-- 📋 Add and manage your vocabulary list
-- ☁️ Sync data with Firebase Realtime Database
-- 🧠 Simple and user-friendly UI
+## 📸 Ekran Görüntüleri
 
----
+*(Eğer istersen buraya uygulamanın ekran görüntülerini ekleyebilirim. `screenshots` klasörü oluşturup içine .png/.jpg dosyaları koyman yeterli.)*
 
-## 📸 Screenshots
+## 🚀 Kurulum
 
-<!-- You can upload screenshots in the GitHub repo and use them like this -->
-<!-- ![Home Screen](screenshots/home.png) -->
-<!-- ![Add Word](screenshots/add_word.png) -->
-
----
-
-## 🛠️ Built With
-
-- **Kotlin**
-- **MVVM Architecture** (ViewModel, LiveData)
-- **Firebase Realtime Database & Authentication**
-- **Material Design** & custom UI components
-- **Android Studio**
-
----
-
-## 📦 Project Structure (simplified)
-
+### 1. Bu repoyu klonlayın
+```bash
+git clone https://github.com/Brkcidem/Vocab.git
