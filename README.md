@@ -41,19 +41,19 @@ git clone https://github.com/Brkcidem/Vocab.git
 
 ## 📱 Screenshots
 
-### Word List
-![Word List](screenshots/vocabulary.png)
-
 ### Login Screen
 ![Login Screen](screenshots/login.png)
 
 ### Main Screen
 ![Main Screen](screenshots/main.png)
 
+### Word List
+![Word List](screenshots/vocabulary.png)
+
 ### Add Word
 ![Add Word](screenshots/add_word.png)
 
-### Game Mode
+### Game
 ![Game Mode](screenshots/game.png)
 
 ### Score Board
