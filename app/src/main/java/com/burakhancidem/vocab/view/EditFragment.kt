@@ -39,25 +39,14 @@ class EditFragment : Fragment() {
 
         auth = Firebase.auth
         db = Firebase.firestore
-        wordArrayList = ArrayList<Word>()
+        wordArrayList = ArrayList()
         getData()
-
-        fun Fragment.handleBackPressWithWarning(onBackPressedAction: () -> Unit) {
-            requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    Navigation.findNavController(view!!).navigate(R.id.action_editFragment_to_mainFragment)
-                }
-            })
-        }
-        handleBackPressWithWarning {
-        }
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEditBinding.inflate(layoutInflater,container,false)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         editAdapter = EditRecyclerAdapter(wordArrayList)
@@ -99,5 +88,10 @@ class EditFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

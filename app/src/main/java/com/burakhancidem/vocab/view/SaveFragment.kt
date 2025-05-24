@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.burakhancidem.vocab.R
+import com.burakhancidem.vocab.databinding.FragmentSaveBinding
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 class SaveFragment : Fragment() {
+
+    private var _binding: FragmentSaveBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
@@ -32,21 +36,20 @@ class SaveFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_save, container, false)
+    ): View {
+        _binding = FragmentSaveBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if (auth.currentUser != null) {
-            val saveButton = view.findViewById<Button>(R.id.saveButton)
+            val saveButton = binding.saveButton
             saveButton.setOnClickListener {
 
-                val editTextEnWord = view.findViewById<EditText>(R.id.editTextEnWord)
-                val editTextTrWord = view.findViewById<EditText>(R.id.editTextTrWord)
-                val enWord = editTextEnWord.text.toString()
-                val trWord = editTextTrWord.text.toString()
+                val enWord = binding.editTextEnWord.text.toString()
+                val trWord = binding.editTextTrWord.text.toString()
 
                 // Firestore'da "editTextEnWord" veya "editTextTrWord" değerlerinden biri var mı kontrol et
                 firestore.collection("Words")
@@ -54,10 +57,8 @@ class SaveFragment : Fragment() {
                     .get()
                     .addOnSuccessListener { enQuerySnapshot ->
                         if (!enQuerySnapshot.isEmpty) {
-                            // Eğer editTextEnWord zaten varsa, uyarı göster ve kayıta izin verme
                             Toast.makeText(requireActivity(), "The English word already exists", Toast.LENGTH_LONG).show()
                         } else {
-                            // editTextTrWord için de aynı kontrolü yap
                             firestore.collection("Words")
                                 .whereEqualTo("editTextTrWord", trWord)
                                 .get()
@@ -66,14 +67,12 @@ class SaveFragment : Fragment() {
                                         // Eğer editTextTrWord zaten varsa, uyarı göster ve kayıta izin verme
                                         Toast.makeText(requireActivity(), "The Turkish word already exists", Toast.LENGTH_LONG).show()
                                     } else {
-                                        // Aynı kelimeler yoksa kaydet
                                         val wordMap = hashMapOf<String, Any>(
                                             "editTextEnWord" to enWord,
                                             "editTextTrWord" to trWord,
                                             "editTextEmailAddress" to auth.currentUser!!.email!!,
                                             "date" to Timestamp.now()
                                         )
-
                                         firestore.collection("Words").add(wordMap)
                                             .addOnSuccessListener {
                                                 Navigation.findNavController(view).navigate(R.id.action_saveFragment_to_editFragment)
@@ -94,6 +93,11 @@ class SaveFragment : Fragment() {
                     }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

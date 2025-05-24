@@ -10,11 +10,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.burakhancidem.vocab.R
+import com.burakhancidem.vocab.databinding.FragmentDeleteBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 class DeleteFragment : Fragment() {
+
+    private var _binding: FragmentDeleteBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var firestore: FirebaseFirestore
 
@@ -23,16 +27,15 @@ class DeleteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         firestore = Firebase.firestore
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_delete, container, false)
+    ): View {
+        _binding = FragmentDeleteBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,20 +45,15 @@ class DeleteFragment : Fragment() {
             myEnWord = DeleteFragmentArgs.fromBundle(it).selectedEnWord
             myTrWord = DeleteFragmentArgs.fromBundle(it).selectedTrWord
 
-            val editTextTextEn = view.findViewById<TextView>(R.id.editTextTextEn)
-            val editTextTextTr = view.findViewById<TextView>(R.id.editTextTextTr)
+            binding.editTextTextEn.setText(myEnWord)
+            binding.editTextTextTr.setText(myTrWord)
 
-            editTextTextEn.text = myEnWord
-            editTextTextTr.text = myTrWord
+            binding.deleteButton.setOnClickListener{
 
-            val deleteButton = view.findViewById<Button>(R.id.deleteButton)
-
-            deleteButton.setOnClickListener{
-
-                if (editTextTextEn.text.isNotEmpty() && editTextTextTr.text.isNotEmpty()){
+                if (binding.editTextTextEn.text.isNotEmpty() && binding.editTextTextTr.text.isNotEmpty()){
                     firestore.collection("Words")
-                        .whereEqualTo("editTextEnWord",editTextTextEn.text.toString())
-                        .whereEqualTo("editTextTrWord",editTextTextTr.text.toString())
+                        .whereEqualTo("editTextEnWord",binding.editTextTextEn.text.toString())
+                        .whereEqualTo("editTextTrWord",binding.editTextTextTr.text.toString())
                         .get()
                     .addOnSuccessListener {
                         for (document in it){
@@ -70,5 +68,10 @@ class DeleteFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

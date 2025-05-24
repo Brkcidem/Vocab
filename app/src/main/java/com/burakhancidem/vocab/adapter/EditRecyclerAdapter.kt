@@ -29,7 +29,10 @@ class EditRecyclerAdapter(private val wordList: ArrayList<Word>): RecyclerView.A
         holder.binding.recyclerTrWord.text = wordList.get(position).editTextTrWord
 
         holder.itemView.setOnClickListener{
-            val action = EditFragmentDirections.actionEditFragmentToDeleteFragment(holder.binding.recyclerEnWord.text.toString(),holder.binding.recyclerTrWord.text.toString())
+            val action = EditFragmentDirections.actionEditFragmentToDeleteFragment(
+                holder.binding.recyclerEnWord.text.toString(),
+                holder.binding.recyclerTrWord.text.toString()
+            )
             Navigation.findNavController(it).navigate(action)
         }
     }

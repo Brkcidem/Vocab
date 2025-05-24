@@ -19,7 +19,8 @@ import androidx.fragment.app.Fragment
 
 class SingFragment : Fragment() {
 
-    lateinit var binding: FragmentSingBinding
+    private var _binding: FragmentSingBinding? = null
+    private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,18 +51,19 @@ class SingFragment : Fragment() {
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-        ): View? {
-            return inflater.inflate(R.layout.fragment_sing, container, false)
+        ): View {
+            _binding = FragmentSingBinding.inflate(inflater, container, false)
+            return binding.root
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            val signUpButton = view.findViewById<Button>(R.id.signUpButton)
+            val signUpButton = binding.signUpButton
             signUpButton.setOnClickListener {
 
-                val email = view.findViewById<EditText>(R.id.editTextEmailAddress)
-                val password = view.findViewById<EditText>(R.id.editTextPassword)
+                val email = binding.editTextEmailAddress
+                val password = binding.editTextPassword
 
                 if (email.text.toString().equals("") || password.text.toString().equals("")) {
                     Toast.makeText(
@@ -92,10 +94,10 @@ class SingFragment : Fragment() {
                 }
             }
 
-            val signInButton = view.findViewById<Button>(R.id.signInButton)
+            val signInButton = binding.signInButton
             signInButton.setOnClickListener {
-                val email = view.findViewById<EditText>(R.id.editTextEmailAddress)
-                val password = view.findViewById<EditText>(R.id.editTextPassword)
+                val email = binding.editTextEmailAddress
+                val password = binding.editTextPassword
 
                 if (email.text.toString().equals("") || password.text.toString().equals("")) {
                     Toast.makeText(
@@ -124,4 +126,8 @@ class SingFragment : Fragment() {
             }
 
         }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

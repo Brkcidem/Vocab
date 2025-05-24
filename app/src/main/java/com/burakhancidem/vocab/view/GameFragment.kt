@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.burakhancidem.vocab.R
+import com.burakhancidem.vocab.databinding.FragmentGameBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -23,6 +24,9 @@ import com.google.firebase.firestore.firestore
 import kotlin.random.Random
 
 class GameFragment : Fragment() {
+
+    private var _binding: FragmentGameBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
@@ -45,8 +49,9 @@ class GameFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_game, container, false)
+    ): View {
+        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     ///////MENU////////
@@ -191,26 +196,26 @@ class GameFragment : Fragment() {
     }
 
     fun getHeart(){
-        val imageView1 = view?.findViewById<ImageView>(R.id.imageView1)
-        val imageView2 = view?.findViewById<ImageView>(R.id.imageView2)
-        val imageView3 = view?.findViewById<ImageView>(R.id.imageView3)
+        val imageView1 = binding.imageView1
+        val imageView2 = binding.imageView2
+        val imageView3 = binding.imageView3
 
         if(heart == 3){
-            imageView1?.visibility = View.VISIBLE
-            imageView2?.visibility = View.VISIBLE
-            imageView3?.visibility = View.VISIBLE
+            imageView1.visibility = View.VISIBLE
+            imageView2.visibility = View.VISIBLE
+            imageView3.visibility = View.VISIBLE
         }else if(heart == 2){
-            imageView1?.visibility = View.INVISIBLE
-            imageView2?.visibility = View.VISIBLE
-            imageView3?.visibility = View.VISIBLE
+            imageView1.visibility = View.INVISIBLE
+            imageView2.visibility = View.VISIBLE
+            imageView3.visibility = View.VISIBLE
         }else if(heart == 1){
-            imageView1?.visibility = View.INVISIBLE
-            imageView2?.visibility = View.INVISIBLE
-            imageView3?.visibility = View.VISIBLE
+            imageView1.visibility = View.INVISIBLE
+            imageView2.visibility = View.INVISIBLE
+            imageView3.visibility = View.VISIBLE
         }else{
-            imageView1?.visibility = View.INVISIBLE
-            imageView2?.visibility = View.INVISIBLE
-            imageView3?.visibility = View.INVISIBLE
+            imageView1.visibility = View.INVISIBLE
+            imageView2.visibility = View.INVISIBLE
+            imageView3.visibility = View.INVISIBLE
         }
     }
 
@@ -222,25 +227,25 @@ class GameFragment : Fragment() {
                     val randomDocument = documents.random()
                     val editTextEnWord = randomDocument.getString("editTextEnWord")
                     val editTextTrWord = randomDocument.getString("editTextTrWord")
-                    val textViewWord = view?.findViewById<TextView>(R.id.textViewWord)
-                    val editTextWord = view?.findViewById<TextView>(R.id.editTextWord)
+                    val textViewWord = binding.textViewWord
+                    val editTextWord = binding.editTextWord
 
-                    textViewWord?.text = editTextEnWord
-                    editTextWord?.hint = "Turkish meaning"
+                    textViewWord.text = editTextEnWord
+                    editTextWord.hint = "Turkish meaning"
 
                     getHeart()
 
-                    val guessButton = view?.findViewById<Button>(R.id.guessButton)
-                    guessButton?.setOnClickListener {
+                    val guessButton = binding.guessButton
+                    guessButton.setOnClickListener {
 
-                        if (editTextWord?.text.toString() == editTextTrWord) {
+                        if (editTextWord.text.toString() == editTextTrWord) {
                             score = score + 1
                             Toast.makeText(requireActivity(), "Correct", Toast.LENGTH_SHORT)
                                 .show()
                             getData()
-                            editTextWord?.text = ""
+                            editTextWord.setText("")
                         } else {
-                            if (editTextWord?.text.toString() == "") {
+                            if (editTextWord.text.toString() == "") {
                                 Toast.makeText(
                                     requireActivity(),
                                     "Fill in the blank!",
@@ -264,12 +269,12 @@ class GameFragment : Fragment() {
                                     ).show()
                                 }
                             }
-                            editTextWord?.text = ""
+                            editTextWord.setText("")
                         }
                     }
 
-                    val skipButton = view?.findViewById<Button>(R.id.skipButton)
-                    skipButton?.setOnClickListener {
+                    val skipButton = binding.skipButton
+                    skipButton.setOnClickListener {
                         if(myLevels == "medium" || myLevels == "hard"){
                             heart --
                         }else{ }
@@ -282,12 +287,12 @@ class GameFragment : Fragment() {
                             Toast.makeText(requireActivity(), editTextTrWord, Toast.LENGTH_LONG)
                                 .show()
                             getData()
-                            editTextWord?.text = ""
+                            editTextWord.setText("")
                         }
                     }
 
-                    val finishButton = view?.findViewById<Button>(R.id.finishButton)
-                    finishButton?.setOnClickListener{
+                    val finishButton = binding.finishButton
+                    finishButton.setOnClickListener{
                         Toast.makeText(requireActivity(), editTextTrWord, Toast.LENGTH_LONG)
                             .show()
                         val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
@@ -308,24 +313,24 @@ class GameFragment : Fragment() {
                     val randomDocument = documents.random()
                     val editTextEnWord = randomDocument.getString("editTextEnWord")
                     val editTextTrWord = randomDocument.getString("editTextTrWord")
-                    val textViewWord = view?.findViewById<TextView>(R.id.textViewWord)
-                    val editTextWord = view?.findViewById<TextView>(R.id.editTextWord)
+                    val textViewWord = binding.textViewWord
+                    val editTextWord = binding.editTextWord
 
-                    textViewWord?.text = editTextTrWord
-                    editTextWord?.hint = "English meaning"
+                    textViewWord.text = editTextTrWord
+                    editTextWord.hint = "English meaning"
 
                     getHeart()
 
-                    val guessButton = view?.findViewById<Button>(R.id.guessButton)
-                    guessButton?.setOnClickListener {
-                        if (editTextWord?.text.toString() == editTextEnWord) {
+                    val guessButton = binding.guessButton
+                    guessButton.setOnClickListener {
+                        if (editTextWord.text.toString() == editTextEnWord) {
                             score = score + 1
                             Toast.makeText(requireActivity(), "Correct", Toast.LENGTH_SHORT)
                                 .show()
                             getData()
-                            editTextWord?.text = ""
+                            editTextWord.setText("")
                         } else {
-                            if (editTextWord?.text.toString() == "") {
+                            if (editTextWord.text.toString() == "") {
                                 Toast.makeText(
                                     requireActivity(),
                                     "Fill in the blank!",
@@ -349,12 +354,12 @@ class GameFragment : Fragment() {
                                     ).show()
                                 }
                             }
-                            editTextWord?.text = ""
+                            editTextWord.setText("")
                         }
                     }
 
-                    val skipButton = view?.findViewById<Button>(R.id.skipButton)
-                    skipButton?.setOnClickListener {
+                    val skipButton = binding.skipButton
+                    skipButton.setOnClickListener {
                         if(myLevels == "medium" || myLevels == "hard"){
                             heart --
                         }else{ }
@@ -367,12 +372,12 @@ class GameFragment : Fragment() {
                             Toast.makeText(requireActivity(), editTextEnWord, Toast.LENGTH_LONG)
                                 .show()
                             getData()
-                            editTextWord?.text = ""
+                            editTextWord.setText("")
                         }
                     }
 
-                    val finishButton = view?.findViewById<Button>(R.id.finishButton)
-                    finishButton?.setOnClickListener{
+                    val finishButton = binding.finishButton
+                    finishButton.setOnClickListener{
                         Toast.makeText(requireActivity(), editTextEnWord, Toast.LENGTH_LONG)
                             .show()
                         val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score,bestScoreTextView)
@@ -406,6 +411,11 @@ class GameFragment : Fragment() {
             }
         }
         checkAndUpdateBestScore()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }
